@@ -12,8 +12,8 @@ cartButton.onclick = function () {
     this.style.border = "1px solid green";
 }
 
-//Свойство classList позволяет работать с классами элемента,
-//в данном случае, переменной modal, которая является элементом DOM с классом modal.
+//Свойство classList позволяет работать с классами элемента.
+//В данном случае, переменной modal, которая является элементом DOM с классом modal.
 //Метод toggle убирает класс или добавляет класс из списка классов элемента
 let toggleModal = function () {
     modal.classList.toggle("is-open");
