@@ -403,6 +403,11 @@ button {
     margin-right: 21px;
 }
 
+#cart-button {
+    border: 1px solid red;
+}
+
+/*Toggle + CSS transition*/
 .modal {
     position: fixed;
     left: 0;
@@ -410,8 +415,14 @@ button {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
-    display: none;
     z-index: 999;
+    display: flex;
+    top: -1000px; /*При display:none; не работает */
+    opacity: 0;
+    transition: opacity 1s ease-in;
+    *-webkit-transition: opacity 1s ease-in;
+    -moz-transition: opacity 1s ease-in;
+    -o-transition: opacity 1s ease-in;
 }
 
 .modal-auth {
@@ -426,7 +437,8 @@ button {
 }
 
 .is-open {
-    display: flex;
+    top: 0;
+    opacity: 1;
 }
 
 .modal-dialog {

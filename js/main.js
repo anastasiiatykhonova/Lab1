@@ -1,3 +1,5 @@
+//querySelector универсальная функция, которая ищет элемент в формате CCS селектора
+
 let cartButton = document.querySelector("#cart-button");
 let modal = document.querySelector(".modal");
 let close = document.querySelector(".close");
@@ -5,8 +7,14 @@ let koshyk = document.querySelector(".modal-body");
 let total = document.querySelector(".modal-pricetag");
 let grandTotal = 0;
 
-//function expression Приклад
-// Присвоюємо змінній toggleModal анонімну функцію.
+//Style
+cartButton.onclick = function () {
+    this.style.border = "1px solid green";
+}
+
+//Свойство classList позволяет работать с классами элемента,
+//в данном случае, переменной modal, которая является элементом DOM с классом modal
+//метод toggle убирает класс или добавляет класс из списка классов элемента
 let toggleModal = function () {
     modal.classList.toggle("is-open");
 }
@@ -14,7 +22,7 @@ let toggleModal = function () {
 cartButton.addEventListener("click", toggleModal);
 close.addEventListener("click", toggleModal);
 
-//Функція з замиканням
+// Функция getElementById & innerHTML
 function makeCounter(id) {
     var currentCount = 1;
 
@@ -38,11 +46,7 @@ function makeDiscounter(id) {
     };
 }
 
-//Приклад патерну "модулю"
 let module = (function () {
-
-    //function declaration Приклад (знаходиться в середині модуля)
-    //Функція vKoshyk викликається з 3-ма параметрами, два з яких мають значення за замовченням (дефолтні значення)
 
     function functionAddToCart(id, name = 'Піца', price = 0) {
         let koshykText = `<div class="food-row">
@@ -57,21 +61,10 @@ let module = (function () {
 
         koshyk.insertAdjacentHTML('beforeend', koshykText);
 
-        // grandTotal = grandTotal + price;
-        // Для прикладу простий вираз додамо в стрілочну функцію
         let sumInKoshyk = (price) => grandTotal += price;
-
-        /* Більш довга форма запису через анонімну функцію (функціональний вираз):
-
-        let sumInKoshyk = function(price) {
-          grandTotal = grandTotal + price;
-          return grandTotal;
-        };
-        */
 
         total.innerHTML = sumInKoshyk(price) + '₴';
         toggleModal();
-
 
         document.getElementById('plus' + id).onclick = makeCounter(id);
         document.getElementById('minus' + id).onclick = makeDiscounter(id);
@@ -81,4 +74,30 @@ let module = (function () {
     return {AddToCart: functionAddToCart}
 })();
 
-let vKoshyk = module.AddToCart;
+let ajaxExmpl = function (method, url, func) {
+    const oReq = new XMLHttpRequest();
+    oReq.addEventListener("load", func);
+    oReq.open(method, url);
+    oReq.send();
+}
+
+let my = function (selector, funct) {
+    document.querySelector(selector).onclick = funct
+}
+
+function vKoshyk(id) {
+    ajaxExmpl("POST", "pizzas.json", function () {
+        const obj = JSON.parse(this.responseText);
+        pizzaId = 'pizza' + id;
+        let name = obj[pizzaId].name;
+        let price = obj[pizzaId].price;
+        module.AddToCart(id, name, price);
+    });
+}
+
+my(".button-auth", function () {
+    ajaxExmpl("GET", "NewFile.html", function () {
+        document.querySelector(".section-heading").insertAdjacentHTML('beforeend', this.responseText);
+    });
+})
+
