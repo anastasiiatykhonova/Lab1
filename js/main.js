@@ -87,6 +87,7 @@ let my = function (selector, funct) {
     document.querySelector(selector).onclick = funct
 }
 
+//json
 function vKoshyk(id) {
     ajaxExmpl("POST", "pizzas.json", function () {
         const obj = JSON.parse(this.responseText);
