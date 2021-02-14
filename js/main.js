@@ -74,6 +74,7 @@ let module = (function () {
     return {AddToCart: functionAddToCart}
 })();
 
+//Обертка для AJAX запросов
 let ajaxExmpl = function (method, url, func) {
     const oReq = new XMLHttpRequest();
     oReq.addEventListener("load", func);
@@ -81,6 +82,7 @@ let ajaxExmpl = function (method, url, func) {
     oReq.send();
 }
 
+//Обертка для querySelector
 let my = function (selector, funct) {
     document.querySelector(selector).onclick = funct
 }
